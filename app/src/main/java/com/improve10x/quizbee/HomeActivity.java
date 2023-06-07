@@ -2,6 +2,7 @@ package com.improve10x.quizbee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.improve10x.quizbee.databinding.ActivityHomeBinding;
@@ -13,5 +14,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        startBtn();
+    }
+
+    private void startBtn() {
+        binding.startBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, QuestionsActivity.class);
+            startActivity(intent);
+        });
     }
 }

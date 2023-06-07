@@ -33,25 +33,25 @@
         app:layout_constraintTop_toBottomOf="@+id/question_txt">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/optionone_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/optiontwo_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/optionthree_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/optionfour_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
@@ -62,10 +62,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="200dp"
         android:backgroundTint="#F44336"
         android:text="Previous"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="699dp" />
+        app:layout_constraintTop_toBottomOf="@+id/options_rg" />
 
     <Button
         android:id="@+id/next_btn"

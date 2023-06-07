@@ -23,11 +23,12 @@
         android:id="@+id/name_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="164dp"
         android:ems="10"
         android:inputType="text"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -35,13 +36,12 @@
         android:id="@+id/start_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="212dp"
         android:backgroundTint="#F44336"
         android:text="Start"
         android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.458"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/name_txt"
+        app:layout_constraintStart_toStartOf="@+id/name_txt"
         app:layout_constraintTop_toBottomOf="@+id/name_txt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
