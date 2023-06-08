@@ -15,11 +15,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuestionsActivity extends AppCompatActivity implements OnItemActionListener{
-   private ActivityQuestionsBinding binding;
-   private List<QuizApp> quizApps = new ArrayList<>();
-   private QuestionsAdapter adapter;
-   private int currentQuestionNumber = 1;
+public class QuestionsActivity extends AppCompatActivity implements OnItemActionListener {
+    private ActivityQuestionsBinding binding;
+    private List<QuizApp> quizApps = new ArrayList<>();
+    private QuestionsAdapter adapter;
+    private int currentQuestionNumber = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +33,21 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
         handlePreviousBtn();
     }
 
+    private void updateQuestionDetails(int questionNumber) {
+        currentQuestionNumber = questionNumber;
+        Question question = quizApps.get(0).getQuestions().get(questionNumber - 1);
+        binding.questionTxt.setText(question.getQuestion());
+        binding.optiononeRb.setText(question.getAnswers().get(0));
+        binding.optiontwoRb.setText(question.getAnswers().get(1));
+        binding.optionthreeRb.setText(question.getAnswers().get(2));
+        binding.optionfourRb.setText(question.getAnswers().get(3));
+
+    }
+
     private void handlePreviousBtn() {
         binding.previousBtn.setOnClickListener(view -> {
             currentQuestionNumber--;
             loadQuestionDetails(currentQuestionNumber);
-            if (currentQuestionNumber == 1){
-                binding.previousBtn.setEnabled(false);
-            }
         });
     }
 
@@ -46,9 +55,6 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
         binding.nextBtn.setOnClickListener(view -> {
             currentQuestionNumber++;
             loadQuestionDetails(currentQuestionNumber);
-            if (currentQuestionNumber == quizApps.get(0).getQuestions().size()){
-                binding.nextBtn.setEnabled(false);
-            }
         });
     }
 
@@ -61,8 +67,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
                 Toast.makeText(QuestionsActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 quizApps = response.body();
                 adapter.setData(quizApps.get(0).getQuestions());
-                loadQuestionDetails(1);
-
+                updateQuestionDetails(1);
             }
 
             @Override
@@ -73,7 +78,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
     }
 
     private void connectAdapter() {
-        binding.querstionsRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        binding.querstionsRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.querstionsRv.setAdapter(adapter);
     }
 
@@ -82,18 +87,37 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
         adapter.setActionListener(this);
     }
 
-    private  void  loadQuestionDetails(int questionNumber){
-        currentQuestionNumber = questionNumber;
-        Question question = quizApps.get(0).getQuestions().get(questionNumber - 1);
-        binding.questionTxt.setText(question.getQuestion());
-        binding.optiononeRb.setText(question.getAnswers().get(0));
-        binding.optiontwoRb.setText(question.getAnswers().get(1));
-        binding.optionthreeRb.setText(question.getAnswers().get(2));
-        binding.optionfourRb.setText(question.getAnswers().get(3));
+    private void loadQuestionDetails(int questionNumber) {
+        updateQuestionDetails(questionNumber);
+        updateQuestionNumber(questionNumber);
+        nextBtnStyling();
+        previousBtnStyling();
     }
 
     @Override
     public void OnClick(int questionNumber) {
         loadQuestionDetails(questionNumber);
+    }
+
+    private void updateQuestionNumber(int questionNumber) {
+        adapter.selectedQuestion = questionNumber;
+        adapter.notifyDataSetChanged();
+    }
+
+    private void nextBtnStyling() {
+        if (currentQuestionNumber == quizApps.get(0).getQuestions().size()) {
+            binding.nextBtn.setEnabled(false);
+        } else {
+            binding.nextBtn.setEnabled(true);
+
+        }
+    }
+
+    private void previousBtnStyling() {
+        if (currentQuestionNumber == 1) {
+            binding.previousBtn.setEnabled(false);
+        } else {
+            binding.previousBtn.setEnabled(true);
+        }
     }
 }

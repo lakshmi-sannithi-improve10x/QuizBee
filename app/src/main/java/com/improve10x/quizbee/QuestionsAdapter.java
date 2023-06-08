@@ -15,17 +15,18 @@ import java.util.List;
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     private List<Question> questions;
     private OnItemActionListener actionListener;
-    private int selectedQuestion = 0;
-    public QuestionsAdapter(List<Question> questions){
+    int selectedQuestion = 1;
+
+    public QuestionsAdapter(List<Question> questions) {
         this.questions = questions;
     }
 
-    void setActionListener(OnItemActionListener listener){
+    void setActionListener(OnItemActionListener listener) {
         this.actionListener = listener;
     }
 
 
-    void  setData(List<Question> questions){
+    void setData(List<Question> questions) {
         this.questions = questions;
         notifyDataSetChanged();
     }
@@ -34,26 +35,24 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        QuestionItemBinding binding = QuestionItemBinding.inflate(inflater,parent,false);
+        QuestionItemBinding binding = QuestionItemBinding.inflate(inflater, parent, false);
         QuestionViewHolder viewHolder = new QuestionViewHolder(binding);
         return viewHolder;
     }
 
-   @SuppressLint("ResourceAsColor")
-   @Override
+    @SuppressLint("ResourceAsColor")
+    @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, @SuppressLint("RecyclerView") int position) {
-     Question question = questions.get(position);
-     holder.binding.questionNumberTxt.setText(String.valueOf(question.getNumber()));
-     if (selectedQuestion == position){
-         holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#FFFFFF"));
-     }else {
-         holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#000000"));
-     }
-     holder.binding.getRoot().setOnClickListener(view -> {
+        Question question = questions.get(position);
+        holder.binding.questionNumberTxt.setText(String.valueOf(question.getNumber()));
+        if (selectedQuestion == position + 1) {
+            holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#FFFFFF"));
+        } else {
+            holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#000000"));
+        }
+        holder.binding.getRoot().setOnClickListener(view -> {
             actionListener.OnClick(question.getNumber());
-            selectedQuestion = position;
-            notifyDataSetChanged();
-     });
+        });
     }
 
     @Override
