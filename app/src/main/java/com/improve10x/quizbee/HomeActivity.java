@@ -13,11 +13,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        getSupportActionBar().setTitle("Quiz Bee");
         setContentView(binding.getRoot());
-        startBtn();
+        handleStartBtn();
     }
 
-    private void startBtn() {
+    private void handleStartBtn() {
         binding.startBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, QuestionsActivity.class);
             startActivity(intent);
