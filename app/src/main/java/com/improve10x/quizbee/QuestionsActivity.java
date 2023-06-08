@@ -19,7 +19,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
    private ActivityQuestionsBinding binding;
    private List<QuizApp> quizApps = new ArrayList<>();
    private QuestionsAdapter adapter;
-   private int currentQuestionNumber;
+   private int currentQuestionNumber = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
