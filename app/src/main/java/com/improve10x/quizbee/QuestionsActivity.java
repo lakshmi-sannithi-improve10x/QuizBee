@@ -21,6 +21,8 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
     private QuestionsAdapter adapter;
     private int currentQuestionNumber = 1;
 
+    private Integer[] answerOptionIndexes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,17 +33,28 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
         getApi();
         handleNextBtn();
         handlePreviousBtn();
+        handleOptions();
     }
 
     private void updateQuestionDetails(int questionNumber) {
         currentQuestionNumber = questionNumber;
         Question question = quizApps.get(0).getQuestions().get(questionNumber - 1);
+        binding.optionsRg.clearCheck();
         binding.questionTxt.setText(question.getQuestion());
         binding.optiononeRb.setText(question.getAnswers().get(0));
         binding.optiontwoRb.setText(question.getAnswers().get(1));
         binding.optionthreeRb.setText(question.getAnswers().get(2));
         binding.optionfourRb.setText(question.getAnswers().get(3));
-
+        if (answerOptionIndexes[currentQuestionNumber] == -1) {
+        } else if (answerOptionIndexes[currentQuestionNumber] == 0) {
+            binding.optiononeRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber] == 1) {
+            binding.optiontwoRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber] == 2) {
+            binding.optionthreeRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber] == 3) {
+            binding.optionfourRb.setChecked(true);
+        }
     }
 
     private void handlePreviousBtn() {
@@ -67,6 +80,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
                 Toast.makeText(QuestionsActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 quizApps = response.body();
                 adapter.setData(quizApps.get(0).getQuestions());
+                answerOptionIndexes = new Integer[quizApps.get(0).getQuestions().size()];
                 updateQuestionDetails(1);
             }
 
@@ -119,5 +133,20 @@ public class QuestionsActivity extends AppCompatActivity implements OnItemAction
         } else {
             binding.previousBtn.setEnabled(true);
         }
+    }
+
+    private void handleOptions() {
+        binding.optionsRg.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            if (binding.optiononeRb.isChecked()) {
+                answerOptionIndexes[currentQuestionNumber] = 0;
+            } else if (binding.optiontwoRb.isChecked()) {
+                answerOptionIndexes[currentQuestionNumber] = 1;
+            } else if (binding.optionthreeRb.isChecked()) {
+                answerOptionIndexes[currentQuestionNumber] = 2;
+            } else if (binding.optionfourRb.isChecked()) {
+                answerOptionIndexes[currentQuestionNumber] = 3;
+            }
+
+        });
     }
 }
